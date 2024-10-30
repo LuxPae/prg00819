@@ -1,15 +1,17 @@
-CMP=g++
+COMPILER=g++
+SOURCES=main.cpp classifica.cpp my_list.cpp
+EXECUTABLE=gioca
+FLAGS=-lncurses -w
+RUN = ./script/run_game.sh 
 
-IDIR = ./include
-ODIR = ./obj
+all: $(EXECUTABLE)
 
-_OBJ = tetramini.o gameplay.o hero.o smashboy.o
-OBJ = $(patsubst %,  $(ODIR)/%, $(_OBJ))
+$(EXECUTABLE) : $(SOURCES)
+	$(COMPILER) -o $(EXECUTABLE) $(SOURCES) $(FLAGS)
 
-FLAGS=-lncurses -I/$(IDIR)
+clean:
+	rm gioca
 
-$(ODIR)/%.o: $(IDIR)/%.cpp $(IDIR)/%.hpp
-	$(CMP) -c $< -o $@ $(FLAGS)
-
-tetris: tetris.cpp $(OBJ)
-	$(CMP) -o $@ $^ $(FLAGS) && ./$@
+run:
+	chmod +x $(RUN)
+	$(RUN) 
